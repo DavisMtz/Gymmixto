@@ -1202,6 +1202,64 @@
   .refresh-btn:active { transform: rotate(180deg); }
   .refresh-btn.spin svg { animation: spin 1s linear; }
 
+  /* —— Ranking Tabs —— */
+  .rank-tabs { display:flex; gap:6px; margin-bottom:14px; background:var(--surface-2); padding:4px; border-radius:var(--r-md); }
+  .rank-tab { flex:1; padding:9px 10px; background:transparent; border:none; border-radius:10px; font-family:var(--mono); font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:var(--text-low); cursor:pointer; transition:all 0.28s var(--smooth); }
+  .rank-tab.active { background:var(--surface-1); color:var(--acc); box-shadow:0 2px 8px rgba(0,0,0,0.4); }
+  .rank-tab:not(.active):hover { color:var(--text-mid); }
+  /* —— Period label —— */
+  .rank-period-label { font-family:var(--mono); font-size:9px; text-transform:uppercase; letter-spacing:0.18em; color:var(--text-low); text-align:center; margin-bottom:10px; }
+  /* —— Viewport + slide transitions —— */
+  .rank-viewport { overflow:hidden; }
+  .rank-list { transition:opacity 0.22s var(--smooth),transform 0.28s var(--spring-soft); }
+  .rank-list.slide-out-left  { opacity:0; transform:translateX(-24px); pointer-events:none; }
+  .rank-list.slide-out-right { opacity:0; transform:translateX(24px);  pointer-events:none; }
+  .rank-list.slide-in-left   { opacity:0; transform:translateX(24px); }
+  .rank-list.slide-in-right  { opacity:0; transform:translateX(-24px); }
+  .rank-list.slide-in-active { opacity:1; transform:translateX(0); }
+  /* —— Tap feedback —— */
+  .rank-row:active { transform:scale(0.97) translateX(0) !important; }
+  /* —— Trend arrows —— */
+  .trend { font-family:var(--mono); font-size:8px; font-weight:700; padding:2px 4px; border-radius:4px; vertical-align:middle; margin-left:3px; display:inline-block; }
+  .trend.up   { color:var(--success); background:var(--success-bg); }
+  .trend.down { color:#ef4444; background:rgba(239,68,68,0.12); }
+
+  /* —— Mini-calendar semanal —— */
+  .week-dots { display:flex; gap:8px; margin-top:14px; justify-content:center; }
+  .week-dot { display:flex; flex-direction:column; align-items:center; gap:5px; }
+  .week-dot-circle { width:30px; height:30px; border-radius:50%; background:var(--surface-3); border:2px solid var(--border); transition:transform 0.3s var(--spring),box-shadow 0.3s; opacity:0; animation:rise 0.4s var(--soft) forwards; }
+  .week-dot-circle.cumple   { background:var(--success); border-color:var(--success); box-shadow:0 0 10px rgba(74,222,128,0.3); }
+  .week-dot-circle.justif   { background:#f59e0b; border-color:#f59e0b; }
+  .week-dot-circle.nocumple { background:#ef4444; border-color:#ef4444; }
+  .week-dot-circle.hoy      { border-color:var(--acc); outline:2px solid var(--acc); outline-offset:2px; }
+  .week-dot-label { font-family:var(--mono); font-size:8px; color:var(--text-low); text-transform:uppercase; letter-spacing:0.06em; }
+  .week-dot:hover .week-dot-circle { transform:scale(1.18); }
+
+  /* —— Countdown strip —— */
+  .countdown-strip { display:flex; align-items:center; justify-content:center; gap:12px; padding:12px 16px; background:var(--surface-2); border:1px solid var(--border); border-radius:var(--r-md); margin-bottom:16px; }
+  .countdown-strip .cd-num { font-family:var(--display); font-size:28px; font-weight:700; color:var(--acc); letter-spacing:-0.04em; font-variant-numeric:tabular-nums; min-width:48px; text-align:center; }
+  .countdown-strip .cd-info { display:flex; flex-direction:column; gap:1px; }
+  .countdown-strip .cd-label { font-size:11px; color:var(--text-mid); text-transform:uppercase; letter-spacing:0.1em; font-weight:600; line-height:1.3; }
+  .countdown-strip .cd-sub { font-size:10px; color:var(--text-low); font-family:var(--mono); }
+  .countdown-strip.urgent .cd-num { color:#ef4444; animation:pulse-glow 1.5s ease-in-out infinite; }
+  .countdown-strip.final { background:var(--acc-soft); border-color:var(--acc); }
+
+  /* —— Activity ticker —— */
+  .activity-ticker { overflow:hidden; margin:0 -20px; border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:var(--surface-2); }
+  .ticker-track { display:flex; gap:28px; padding:10px 20px; animation:marquee 22s linear infinite; width:max-content; }
+  .ticker-item { display:flex; align-items:center; gap:8px; white-space:nowrap; font-size:11px; color:var(--text-mid); font-family:var(--mono); }
+  .ticker-dot { width:6px; height:6px; border-radius:50%; background:var(--success); flex-shrink:0; }
+  .ticker-name { font-weight:700; color:var(--text-hi); }
+  .ticker-sep { color:var(--text-low); }
+
+  /* —— Danger zone strip —— */
+  .danger-strip { display:flex; align-items:center; gap:10px; padding:12px 16px; background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.4); border-radius:var(--r-md); margin-bottom:12px; opacity:0; transform:translateY(-8px); transition:opacity 0.3s var(--smooth),transform 0.3s var(--spring-soft); }
+  .danger-strip.show { opacity:1; transform:translateY(0); }
+  .danger-strip.critical { background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.4); }
+  .danger-strip .danger-icon { font-size:18px; flex-shrink:0; }
+  .danger-strip .danger-text { font-size:13px; color:var(--text-mid); line-height:1.4; }
+  .danger-strip .danger-text b { color:var(--text-hi); }
+
   /* —— Modales —— */
   .modal-overlay {
     position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
@@ -1546,6 +1604,15 @@
     <span>EST · MX</span>
   </div>
 
+  <!-- COUNTDOWN -->
+  <div class="countdown-strip" id="countdownStrip">
+    <div class="cd-num" id="cdDays">—</div>
+    <div class="cd-info">
+      <span class="cd-label">Días para<br>el fin del reto</span>
+      <span class="cd-sub">13 DIC 2026</span>
+    </div>
+  </div>
+
   <!-- HERO CARD -->
   <section class="hero stagger">
     <div class="hero-eyebrow"><span class="ed-num"></span>Tu reto · Esta semana</div>
@@ -1575,6 +1642,12 @@
 
   <!-- GREETING -->
   <div class="greeting" id="greetingBox"></div>
+
+  <!-- DANGER ZONE -->
+  <div class="danger-strip" id="dangerStrip" style="display:none">
+    <span class="danger-icon">⚠️</span>
+    <span class="danger-text"></span>
+  </div>
 
   <!-- DONE STATE -->
   <div class="done-state" id="doneState">
@@ -1693,12 +1766,24 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 0115.36-6.36L21 8M21 3v5h-5M21 12a9 9 0 01-15.36 6.36L3 16M3 21v-5h5"/></svg>
       </button>
     </div>
-    <ul class="rank-list" id="rankList">
-      <li class="rank-skeleton"><div class="sk sk-pos"></div><div class="sk sk-av"></div><div class="sk sk-text"></div><div class="sk sk-tag"></div></li>
-      <li class="rank-skeleton"><div class="sk sk-pos"></div><div class="sk sk-av"></div><div class="sk sk-text"></div><div class="sk sk-tag"></div></li>
-      <li class="rank-skeleton"><div class="sk sk-pos"></div><div class="sk sk-av"></div><div class="sk sk-text"></div><div class="sk sk-tag"></div></li>
-    </ul>
+    <div class="rank-tabs" role="tablist">
+      <button class="rank-tab active" id="tabSemana" role="tab" aria-selected="true" onclick="switchRankTab('semana')">Esta semana</button>
+      <button class="rank-tab" id="tabMes" role="tab" aria-selected="false" onclick="switchRankTab('mes')">Este mes</button>
+    </div>
+    <div class="rank-period-label" id="rankPeriodLabel"></div>
+    <div class="rank-viewport">
+      <ul class="rank-list" id="rankList">
+        <li class="rank-skeleton"><div class="sk sk-pos"></div><div class="sk sk-av"></div><div class="sk sk-text"></div><div class="sk sk-tag"></div></li>
+        <li class="rank-skeleton"><div class="sk sk-pos"></div><div class="sk sk-av"></div><div class="sk sk-text"></div><div class="sk sk-tag"></div></li>
+        <li class="rank-skeleton"><div class="sk sk-pos"></div><div class="sk sk-av"></div><div class="sk sk-text"></div><div class="sk sk-tag"></div></li>
+      </ul>
+    </div>
   </section>
+
+  <!-- ACTIVITY TICKER -->
+  <div class="activity-ticker" id="activityTicker" style="display:none">
+    <div class="ticker-track" id="tickerTrack"></div>
+  </div>
 
   <!-- REGLAMENTO -->
   <section class="rules-card reveal" id="rules" data-reveal>
@@ -1967,19 +2052,54 @@
   // —————————————————————————————————————————————————
   let usersList = [];
   let rankingData = [];
+  let monthlyRankingData = [];
+  let prevRankingData = [];
+  let activeRankTab = 'semana';
+  let monthlyLoaded = false;
   let selectedUser = '';
   const STORAGE_KEY = 'gymAppUser_v2';
 
-  const phrases = [
-    'Hoy es un gran día para romper tus límites.',
-    'La disciplina es el puente entre metas y logros.',
-    'No pares hasta sentirte orgulloso de ti.',
-    'Tu única competencia es quien eras ayer.',
-    'Dale con todo. El dolor es temporal.',
-    'Transforma tus excusas en esfuerzo.',
-    'El sudor de hoy es la fuerza de mañana.',
-    'Pequeños pasos, grandes resultados.'
-  ];
+  const phrasesBank = {
+    urgency: [
+      '¡No te quedes atrás! Hoy es tu oportunidad.',
+      'La multa duele más que el gym. ¡Muévete!',
+      'Tu equipo te necesita. Dale con todo hoy.',
+      'Queda poco tiempo. Cada minuto cuenta.',
+    ],
+    normal: [
+      'La disciplina es el puente entre metas y logros.',
+      'Tu única competencia es quien eras ayer.',
+      'El sudor de hoy es la fuerza de mañana.',
+      'Pequeños pasos, grandes resultados.',
+      'Transforma tus excusas en esfuerzo.',
+      'No pares hasta sentirte orgulloso de ti.',
+    ],
+    celebration: [
+      '¡Ya cumpliste la semana! Ahora rompe récords.',
+      'Semana SÓLIDA. Imparable.',
+      '¡Así se hace el reto! Sigue construyendo.',
+      'Leyenda en progreso. No pares.',
+    ]
+  };
+
+  function getAdaptivePhrase() {
+    const userEntry = rankingData.find(r => r.nombre === selectedUser);
+    const dias = userEntry ? userEntry.dias : 0;
+    const now = new Date();
+    const dayNorm = now.getDay() === 0 ? 7 : now.getDay();
+    const daysLeft = 8 - dayNorm;
+    const needed = 4 - dias;
+    let pool;
+    if (dias >= 4) pool = phrasesBank.celebration;
+    else if (needed > 0 && daysLeft <= needed) pool = phrasesBank.urgency;
+    else pool = phrasesBank.normal;
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  function updateGreetingPhrase() {
+    const el = $('greetPhrase');
+    if (el) el.textContent = getAdaptivePhrase();
+  }
 
   const animeIntroPhrases = [
     "TU ESFUERZO CONSTANTE TIENE RESULTADOS INCREÍBLES.<br>SIGUE ASÍ.",
@@ -2109,6 +2229,7 @@
   // —————————————————————————————————————————————————
   window.onload = function() {
     paintStatusStrip();
+    paintCountdown();
     setupScrollProgress();
     setupActivityChipMagnet();
 
@@ -2125,6 +2246,13 @@
         { nombre: 'Juan Perez', dias: 3, calorias: 1980 },
         { nombre: 'Maria Garcia', dias: 2, calorias: 1340 }
       ], bote: 845.00 });
+      updatePeriodLabel('semana');
+      renderActivityTicker([
+        { nombre: 'Alexa', tipo: 'Gimnasio', calorias: 520, hace: '1 h' },
+        { nombre: 'Diego', tipo: 'Fuera del Gym', calorias: 480, hace: '3 h' },
+        { nombre: 'Sofia', tipo: 'Gimnasio', calorias: 610, hace: '5 h' },
+        { nombre: 'Juan', tipo: 'Gimnasio', calorias: 390, hace: '1 d' },
+      ]);
     }
   };
 
@@ -2200,6 +2328,7 @@
     showGreeting(name);
     checkUserStatus();
     checkDebt(name);
+    checkDangerZone();
 
     if(isNewSelection) {
       playAnimeIntro(name);
@@ -2211,17 +2340,18 @@
   // —————————————————————————————————————————————————
   function showGreeting(user) {
     if (!user) return;
-    const phrase = phrases[Math.floor(Math.random() * phrases.length)];
     const firstName = user.split(' ')[0];
     const box = $('greetingBox');
     box.style.display = 'block';
     box.innerHTML = `
       <h4>Hola, ${firstName}.</h4>
-      <p>${phrase}</p>
+      <p id="greetPhrase">${getAdaptivePhrase()}</p>
       <div id="streakWrap"></div>
+      <div id="semanaWrap"></div>
     `;
     if (typeof google !== 'undefined' && google.script) {
       google.script.run.withSuccessHandler(renderStreak).obtenerRachaUsuario(user);
+      google.script.run.withSuccessHandler(renderSemana).obtenerSemanaUsuario(user);
     }
   }
   function renderStreak(streak) {
@@ -2461,33 +2591,51 @@
   function loadRanking() {
     if (typeof google !== 'undefined' && google.script) {
       google.script.run.withSuccessHandler(renderRanking).obtenerRanking();
+      google.script.run.withSuccessHandler((d) => { prevRankingData = d.ranking || []; }).obtenerRankingAnterior();
+      google.script.run.withSuccessHandler(renderActivityTicker).obtenerActividadReciente();
     }
   }
 
   function renderRanking(data) {
     rankingData = data.ranking || [];
     animateNumber($('boteMonto'), data.bote || 0, 1200);
+    renderRankingData(rankingData, null);
+    updatePeriodLabel('semana');
+    if (selectedUser) {
+      checkDangerZone();
+      updateGreetingPhrase();
+      checkSemanaPerfecta();
+    }
+  }
 
+  function renderRankingData(data, slideClass) {
     const list = $('rankList');
-    if (!rankingData.length) {
-      list.innerHTML = '<li class="rank-empty">Sin datos esta semana — sé el primero.</li>';
+    if (!data || !data.length) {
+      list.innerHTML = '<li class="rank-empty">Sin datos — sé el primero.</li>';
       return;
     }
-
+    if (slideClass) list.classList.add(slideClass);
     list.innerHTML = '';
-    rankingData.forEach((r, i) => {
+    const prevMap = {};
+    prevRankingData.forEach((r, i) => { prevMap[r.nombre] = i + 1; });
+    data.forEach((r, i) => {
       const li = document.createElement('li');
       li.className = 'rank-row';
-      li.style.animationDelay = (i * 0.06) + 's';
-      if (i === 0) li.classList.add('top-1');
-      if (i === 1) li.classList.add('top-2');
-      if (i === 2) li.classList.add('top-3');
+      if (i === 0) { li.classList.add('top-1'); li.style.animation = 'pop 0.7s var(--spring) 0.28s both'; }
+      else if (i === 1) { li.classList.add('top-2'); li.style.animation = 'rise 0.6s var(--spring-soft) 0.14s both'; }
+      else if (i === 2) { li.classList.add('top-3'); li.style.animation = 'rise 0.55s var(--soft) 0.07s both'; }
+      else { li.style.animationDelay = (i * 0.06) + 's'; }
       if (r.nombre === selectedUser) li.classList.add('you');
-
       const daysClass = r.dias >= 4 ? 'rank-days full' : 'rank-days';
-
+      const prevPos = prevMap[r.nombre];
+      let trend = '';
+      if (prevPos) {
+        const diff = prevPos - (i + 1);
+        if (diff > 0) trend = `<span class="trend up">↑${diff}</span>`;
+        else if (diff < 0) trend = `<span class="trend down">↓${Math.abs(diff)}</span>`;
+      }
       li.innerHTML = `
-        <div class="rank-pos">${i + 1}</div>
+        <div class="rank-pos">${i + 1}${trend}</div>
         <div class="rank-av">${getInitials(r.nombre)}</div>
         <div class="rank-info">
           <div class="rank-name">${r.nombre}</div>
@@ -2497,13 +2645,172 @@
       `;
       list.appendChild(li);
     });
+    if (slideClass) {
+      requestAnimationFrame(() => {
+        list.classList.remove(slideClass);
+        list.classList.add('slide-in-active');
+        setTimeout(() => list.classList.remove('slide-in-active'), 300);
+      });
+    }
+    if (selectedUser && activeRankTab === 'semana') updateProgress();
+  }
 
-    if (selectedUser) updateProgress();
+  function switchRankTab(tab) {
+    if (tab === activeRankTab) return;
+    vibrate();
+    const goingRight = (tab === 'mes');
+    $('tabSemana').classList.toggle('active', tab === 'semana');
+    $('tabSemana').setAttribute('aria-selected', tab === 'semana');
+    $('tabMes').classList.toggle('active', tab === 'mes');
+    $('tabMes').setAttribute('aria-selected', tab === 'mes');
+    activeRankTab = tab;
+    const list = $('rankList');
+    list.classList.add(goingRight ? 'slide-out-left' : 'slide-out-right');
+    setTimeout(() => {
+      list.classList.remove('slide-out-left', 'slide-out-right');
+      if (tab === 'semana') {
+        renderRankingData(rankingData, 'slide-in-right');
+        updatePeriodLabel('semana');
+      } else {
+        if (monthlyLoaded) {
+          renderRankingData(monthlyRankingData, 'slide-in-left');
+          updatePeriodLabel('mes');
+        } else {
+          list.innerHTML = `
+            <li class="rank-skeleton"><div class="sk sk-pos"></div><div class="sk sk-av"></div><div class="sk sk-text"></div><div class="sk sk-tag"></div></li>
+            <li class="rank-skeleton"><div class="sk sk-pos"></div><div class="sk sk-av"></div><div class="sk sk-text"></div><div class="sk sk-tag"></div></li>
+            <li class="rank-skeleton"><div class="sk sk-pos"></div><div class="sk sk-av"></div><div class="sk sk-text"></div><div class="sk sk-tag"></div></li>`;
+          if (typeof google !== 'undefined' && google.script) {
+            google.script.run
+              .withSuccessHandler((data) => {
+                monthlyRankingData = data.ranking || [];
+                monthlyLoaded = true;
+                renderRankingData(monthlyRankingData, 'slide-in-left');
+                updatePeriodLabel('mes');
+              })
+              .withFailureHandler(() => showToast('Error al cargar ranking mensual', true))
+              .obtenerRankingMensual();
+          }
+        }
+      }
+    }, 220);
+  }
+
+  function updatePeriodLabel(tab) {
+    const el = $('rankPeriodLabel');
+    if (!el) return;
+    if (tab === 'semana') {
+      el.textContent = `Semana ${String(getWeekNumber(new Date())).padStart(2,'0')} · ${new Date().getFullYear()}`;
+    } else {
+      const label = new Date().toLocaleDateString('es-MX', { month: 'long', year: 'numeric' });
+      el.textContent = label.charAt(0).toUpperCase() + label.slice(1);
+    }
+    el.style.animation = 'none'; void el.offsetWidth;
+    el.style.animation = 'rise 0.4s var(--soft) forwards';
+  }
+
+  function renderSemana(semana) {
+    const wrap = $('semanaWrap');
+    if (!wrap || !semana) return;
+    const hoyStr = new Date().toISOString().slice(0,10);
+    const dots = semana.map((d, i) => {
+      let cls = 'week-dot-circle';
+      if (d.estatus === 'CUMPLE') cls += ' cumple';
+      else if (d.estatus === 'JUSTIFICADO') cls += ' justif';
+      else if (d.estatus === 'NO CUMPLE') cls += ' nocumple';
+      if (d.fecha === hoyStr) cls += ' hoy';
+      return `<div class="week-dot">
+        <div class="${cls}" style="animation-delay:${i*0.06}s"></div>
+        <span class="week-dot-label">${d.dia}</span>
+      </div>`;
+    }).join('');
+    wrap.innerHTML = `<div class="week-dots">${dots}</div>`;
+  }
+
+  function renderActivityTicker(entries) {
+    if (!entries || !entries.length) return;
+    const track = $('tickerTrack');
+    const ticker = $('activityTicker');
+    if (!track || !ticker) return;
+    const icons = { 'Gimnasio':'🏋️', 'Fuera del Gym':'🏃', 'Vacaciones':'🌴', 'Incapacidad':'💊' };
+    const html = [...entries, ...entries].map(e =>
+      `<span class="ticker-item">
+        <span class="ticker-dot"></span>
+        ${icons[e.tipo] || '💪'} <span class="ticker-name">${e.nombre}</span>
+        <span class="ticker-sep">·</span>
+        ${e.calorias > 0 ? e.calorias + ' kcal' : e.tipo}
+        <span class="ticker-sep">·</span> hace ${e.hace}
+      </span>`
+    ).join('');
+    track.innerHTML = html;
+    ticker.style.display = 'block';
+  }
+
+  function checkDangerZone() {
+    const strip = $('dangerStrip');
+    if (!strip || !selectedUser) return;
+    const userEntry = rankingData.find(r => r.nombre === selectedUser);
+    const dias = userEntry ? userEntry.dias : 0;
+    const needed = 4 - dias;
+    const dayNorm = new Date().getDay() === 0 ? 7 : new Date().getDay();
+    const daysLeftInclToday = 8 - dayNorm;
+    if (needed > 0 && daysLeftInclToday <= needed + 1) {
+      strip.style.display = 'flex';
+      strip.querySelector('.danger-text').innerHTML =
+        `Llevas <b>${dias} día${dias !== 1 ? 's' : ''}</b> esta semana — necesitas <b>${needed} más</b> para no multar.`;
+      strip.classList.toggle('critical', daysLeftInclToday <= needed);
+      requestAnimationFrame(() => strip.classList.add('show'));
+    } else {
+      strip.classList.remove('show');
+      setTimeout(() => strip.style.display = 'none', 300);
+    }
+  }
+
+  function checkSemanaPerfecta() {
+    if (!selectedUser) return;
+    const userEntry = rankingData.find(r => r.nombre === selectedUser);
+    if (!userEntry || userEntry.dias < 7) return;
+    const key = `perfectWeek_${selectedUser}_${getWeekNumber(new Date())}_${new Date().getFullYear()}`;
+    if (localStorage.getItem(key)) return;
+    localStorage.setItem(key, '1');
+    triggerSemanaPerfecta();
+  }
+
+  function triggerSemanaPerfecta() {
+    vibrate([80, 60, 80, 60, 200]);
+    const duration = 4000;
+    const end = Date.now() + duration;
+    (function frame() {
+      confetti({ particleCount: 10, angle: 60, spread: 80, origin: { x: 0 }, colors: ['#d4ff00','#ffffff','#4ade80','#ffd84d'] });
+      confetti({ particleCount: 10, angle: 120, spread: 80, origin: { x: 1 }, colors: ['#d4ff00','#ffffff','#4ade80','#ffd84d'] });
+      if (Date.now() < end) requestAnimationFrame(frame);
+    })();
+    showToast('🏆 ¡SEMANA PERFECTA! 7/7 días. ¡Leyenda!');
+  }
+
+  function paintCountdown() {
+    const end = new Date('2026-12-13T23:59:59-06:00');
+    const now = new Date();
+    const days = Math.ceil((end - now) / (1000 * 60 * 60 * 24));
+    const strip = $('countdownStrip');
+    const el = $('cdDays');
+    if (!strip || !el) return;
+    if (days <= 0) {
+      strip.classList.add('final');
+      el.textContent = '¡Hoy!';
+      strip.querySelector('.cd-label').textContent = '¡Último día del reto!';
+      return;
+    }
+    animateNumber(el, days, 1200);
+    if (days <= 7) strip.classList.add('urgent');
   }
 
   $('refreshBtn').addEventListener('click', () => {
     vibrate();
     $('refreshBtn').classList.add('spin');
+    monthlyLoaded = false; monthlyRankingData = [];
+    activeRankTab = 'semana';
+    $('tabSemana').classList.add('active'); $('tabMes').classList.remove('active');
     loadRanking();
     setTimeout(() => $('refreshBtn').classList.remove('spin'), 1000);
   });

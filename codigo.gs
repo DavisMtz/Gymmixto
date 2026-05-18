@@ -194,6 +194,33 @@ function obtenerHistorialUsuario(usuario) {
   return historial;
 }
 
+function obtenerSemanaUsuario(usuario) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var hoja = ss.getSheetByName("Registros");
+  var datos = hoja.getDataRange().getValues();
+  var zona = "America/Mexico_City";
+  var hoy = new Date();
+  var hoyStr = Utilities.formatDate(hoy, zona, "yyyy-MM-dd");
+  var hp = hoyStr.split('-');
+  var hoyObj = new Date(hp[0], hp[1]-1, hp[2], 12, 0, 0);
+  var diaNorm = hoyObj.getDay() === 0 ? 7 : hoyObj.getDay();
+  var lunes = new Date(hoyObj); lunes.setDate(hoyObj.getDate() - (diaNorm - 1));
+  var dias = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
+  var semana = [];
+  for (var d = 0; d < 7; d++) {
+    var f = new Date(lunes); f.setDate(lunes.getDate() + d);
+    semana.push({ dia: dias[d], fecha: Utilities.formatDate(f, zona, "yyyy-MM-dd"), estatus: 'sin registro' });
+  }
+  for (var i = 1; i < datos.length; i++) {
+    if (datos[i][1] !== usuario) continue;
+    var fechaReg = Utilities.formatDate(new Date(datos[i][2]), zona, "yyyy-MM-dd");
+    for (var d = 0; d < 7; d++) {
+      if (semana[d].fecha === fechaReg) { semana[d].estatus = datos[i][7]; break; }
+    }
+  }
+  return semana;
+}
+
 function guardarRegistro(datos) {
   try {
     // 1. Doble validación servidor para evitar trampas/doble clic
@@ -326,6 +353,90 @@ function obtenerRanking() {
     bote: boteTotal
   };
 }
+
+function obtenerRankingMensual() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var hojaReg = ss.getSheetByName("Registros");
+  var datos = hojaReg.getDataRange().getValues();
+  var zona = "America/Mexico_City";
+  var hoyStr = Utilities.formatDate(new Date(), zona, "yyyy-MM-dd");
+  var partes = hoyStr.split('-');
+  var anio = parseInt(partes[0]), mes = parseInt(partes[1]) - 1;
+  var primerDia = new Date(anio, mes, 1, 0, 0, 0, 0);
+  var ultimoDia = new Date(anio, mes + 1, 0, 23, 59, 59, 999);
+  var conteo = {};
+  for (var i = 1; i < datos.length; i++) {
+    var fila = datos[i], nombre = fila[1], fechaReg = new Date(fila[2]);
+    if (fechaReg >= primerDia && fechaReg <= ultimoDia) {
+      if (!conteo[nombre]) conteo[nombre] = { dias: 0, calorias: 0 };
+      if (fila[7] === "CUMPLE" || fila[7] === "JUSTIFICADO") conteo[nombre].dias++;
+      if (fila[3] === "Gimnasio" || fila[3] === "Fuera del Gym") conteo[nombre].calorias += Number(fila[5]) || 0;
+    }
+  }
+  var boteTotal = 0;
+  var hojaPagos = ss.getSheetByName("Pagos");
+  if (hojaPagos && hojaPagos.getLastRow() > 1) {
+    var dp = hojaPagos.getRange(2, 1, hojaPagos.getLastRow()-1, 5).getValues();
+    for (var p = 0; p < dp.length; p++) { var m = parseFloat(dp[p][2]); if (!isNaN(m)) boteTotal += m; }
+  }
+  var rankingFinal = [];
+  for (var key in conteo) rankingFinal.push({ nombre: key, dias: conteo[key].dias, calorias: conteo[key].calorias });
+  rankingFinal.sort(function(a,b) { return b.dias !== a.dias ? b.dias-a.dias : b.calorias-a.calorias; });
+  return { ranking: rankingFinal, bote: boteTotal };
+}
+
+function obtenerRankingAnterior() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var hojaReg = ss.getSheetByName("Registros");
+  var datos = hojaReg.getDataRange().getValues();
+  var zona = "America/Mexico_City";
+  var hoyStr = Utilities.formatDate(new Date(), zona, "yyyy-MM-dd");
+  var hp = hoyStr.split('-');
+  var hoyObj = new Date(hp[0], hp[1]-1, hp[2], 12, 0, 0);
+  var diaNorm = hoyObj.getDay() === 0 ? 7 : hoyObj.getDay();
+  var lunesEsta = new Date(hoyObj); lunesEsta.setDate(hoyObj.getDate() - (diaNorm - 1));
+  var lunesAnt = new Date(lunesEsta); lunesAnt.setDate(lunesEsta.getDate() - 7);
+  lunesAnt.setHours(0,0,0,0);
+  var domingoAnt = new Date(lunesAnt); domingoAnt.setDate(lunesAnt.getDate() + 6); domingoAnt.setHours(23,59,59,999);
+  var conteo = {};
+  for (var i = 1; i < datos.length; i++) {
+    var fila = datos[i], nombre = fila[1], fechaReg = new Date(fila[2]);
+    if (fechaReg >= lunesAnt && fechaReg <= domingoAnt) {
+      if (!conteo[nombre]) conteo[nombre] = { dias: 0, calorias: 0 };
+      if (fila[7] === "CUMPLE" || fila[7] === "JUSTIFICADO") conteo[nombre].dias++;
+      if (fila[3] === "Gimnasio" || fila[3] === "Fuera del Gym") conteo[nombre].calorias += Number(fila[5]) || 0;
+    }
+  }
+  var rankingFinal = [];
+  for (var key in conteo) rankingFinal.push({ nombre: key, dias: conteo[key].dias, calorias: conteo[key].calorias });
+  rankingFinal.sort(function(a,b) { return b.dias !== a.dias ? b.dias-a.dias : b.calorias-a.calorias; });
+  return { ranking: rankingFinal };
+}
+
+function obtenerActividadReciente() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var hoja = ss.getSheetByName("Registros");
+  var datos = hoja.getDataRange().getValues();
+  var ahora = new Date();
+  var resultado = [];
+  for (var i = datos.length - 1; i >= 1; i--) {
+    var estatus = datos[i][7];
+    if (estatus !== "CUMPLE" && estatus !== "JUSTIFICADO") continue;
+    var diffMins = Math.round((ahora - new Date(datos[i][0])) / 60000);
+    var hace = diffMins < 60 ? diffMins + ' min'
+             : diffMins < 1440 ? Math.round(diffMins/60) + ' h'
+             : Math.round(diffMins/1440) + ' d';
+    resultado.push({
+      nombre: datos[i][1].split(' ')[0],
+      tipo: datos[i][3],
+      calorias: Number(datos[i][5]) || 0,
+      hace: hace
+    });
+    if (resultado.length >= 8) break;
+  }
+  return resultado;
+}
+
 // Función auxiliar: Número de semana ISO
 function getWeekNumber(d) {
   d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
