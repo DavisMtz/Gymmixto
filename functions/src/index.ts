@@ -5,7 +5,18 @@ import { onSchedule } from 'firebase-functions/v2/scheduler';
 import { syncSheetToFirestore } from './sync';
 
 initializeApp();
-setGlobalOptions({ region: process.env.FUNCTIONS_REGION || 'us-central1', maxInstances: 10 });
+
+// Las Functions corren COMO esta cuenta de servicio. Comparte la Hoja de Google
+// como Editor con este correo y la Sheets API autenticará automáticamente
+// (sin necesidad de pegar la clave privada). Override con FUNCTIONS_SA.
+const SERVICE_ACCOUNT =
+  process.env.FUNCTIONS_SA || 'firebase-adminsdk-fbsvc@servicios-logidma.iam.gserviceaccount.com';
+
+setGlobalOptions({
+  region: process.env.FUNCTIONS_REGION || 'us-central1',
+  maxInstances: 10,
+  serviceAccount: SERVICE_ACCOUNT,
+});
 
 // Callables de la app (lecturas desde Firestore, escrituras a la Hoja).
 export {

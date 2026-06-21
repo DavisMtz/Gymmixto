@@ -13,10 +13,11 @@ const SHEET_PAGOS = 'Pagos';
 
 let client: sheets_v4.Sheets | null = null;
 
+// ID de la Hoja "RETO 2026". Override con la variable de entorno SPREADSHEET_ID.
+const DEFAULT_SPREADSHEET_ID = '1E46f6q3q1kLl4E04uX1i3a0HENZpmcOVatDtbd0E8TQ';
+
 function spreadsheetId(): string {
-  const id = process.env.SPREADSHEET_ID;
-  if (!id) throw new Error('Falta la variable de entorno SPREADSHEET_ID');
-  return id;
+  return process.env.SPREADSHEET_ID || DEFAULT_SPREADSHEET_ID;
 }
 
 async function getClient(): Promise<sheets_v4.Sheets> {
