@@ -1,0 +1,53 @@
+name: Deploy a Firebase
+
+# Despliega Hosting + Cloud Functions + reglas de Firestore con `firebase deploy`
+# (la forma correcta: asigna GOOGLE_FUNCTION_TARGET por cada función).
+on:
+  push:
+    branches:
+      - claude/firebase-web-migration-lt5a5z
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: firebase-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Build web (export estático -> web/out)
+        working-directory: web
+        run: |
+          npm ci
+          npm run build
+
+      - name: Build functions (tsc -> functions/lib)
+        working-directory: functions
+        run: |
+          npm ci
+          npm run build
+
+      - name: Escribir credenciales del service account
+        run: |
+          printf '%s' "$FIREBASE_SERVICE_ACCOUNT" > "$RUNNER_TEMP/sa.json"
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+
+      - name: Deploy a Firebase
+        run: |
+          npx firebase-tools@latest deploy \
+            --only functions,hosting,firestore \
+            --project servicios-logidma \
+            --non-interactive --force
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/sa.json
