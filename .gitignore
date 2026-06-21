@@ -1,0 +1,28 @@
+# Dependencias
+node_modules/
+
+# Next.js
+web/.next/
+web/out/
+web/next-env.d.ts
+
+# Cloud Functions build
+functions/lib/
+
+# Variables de entorno
+.env
+.env.local
+.env*.local
+functions/.env
+
+# Logs / sistema
+*.log
+.DS_Store
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+.firebase/
+
+# Extracción temporal de la migración
+_extract/
+gen-gymui.js
